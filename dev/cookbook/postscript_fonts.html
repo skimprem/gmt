@@ -265,12 +265,10 @@ GMT you need to specify the PostScript name of the relevant fonts in
 the file <code class="docutils literal notranslate"><span class="pre">PSL_custom_fonts.txt</span></code>. We recommend you place this file in
 your GMT user directory (~/.gmt) as GMT will look there as well as in your
 home directory.  Below is an example of a typical entry for two separate fonts:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>LinBiolinumO      <span class="m">0</span>.700    <span class="m">0</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>LinBiolinumO      <span class="m">0</span>.700    <span class="m">0</span>
 LinLibertineOB    <span class="m">0</span>.700    <span class="m">0</span>
 </pre></div>
 </div>
-</div></blockquote>
 <p>The format is a space delimited list of the PostScript font name, the
 font’s height-point size-ratio, and a boolean variable that tells GMT to
 re-encode the font (if set to zero). The latter has to be set to zero as
@@ -278,18 +276,16 @@ additional fonts will most likely not come in standard
 PostScript encoding. GMT determines how tall typical annotations
 might be from the font size ratio so that the vertical position of
 labels and titles can be adjusted to a more uniform typesetting. This
-ratio can be estimated from the height of the letter A for a unit font size.
+ratio can be estimated from the height of the letter <strong>A</strong> for a unit font size.
 Now, you can set the GMT font parameters to your non-standard fonts:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt <span class="nb">set</span> FONT              LinBiolinumO <span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt <span class="nb">set</span> FONT              LinBiolinumO <span class="se">\</span>
         FONT_TITLE        28p,LinLibertineOB <span class="se">\</span>
         PS_CHAR_ENCODING  ISO-8859-1 <span class="se">\</span>
         MAP_DEGREE_SYMBOL degree
 </pre></div>
 </div>
-</div></blockquote>
 <p>After setting the encoding and the degree symbol, the configuration part
-for GMT is finished and you can proceed to create GMT-maps as usual.
+for GMT is finished and you can proceed to create GMT maps as usual.
 An example script is discussed in Example <a class="reference internal" href="../gallery/ex31.html#example-31"><span class="std std-ref">(31) Using non-default fonts in PostScript</span></a>.</p>
 <div class="section" id="embedding-fonts-in-postscript-and-pdf">
 <h3>12.1.1. Embedding fonts in PostScript and PDF<a class="headerlink" href="#embedding-fonts-in-postscript-and-pdf" title="Permalink to this headline">¶</a></h3>
@@ -306,11 +302,11 @@ only need to point the <code class="docutils literal notranslate"><span class="p
 directory where the font files can be found and invoke
 <a class="reference internal" href="../psconvert.html"><span class="doc">psconvert</span></a> in the usual way. Likewise
 you can specify Ghostscript’s <code class="docutils literal notranslate"><span class="pre">-sFONTPATH</span></code> option on the
-command line with <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">-sFONTPATH=/path/to/fontdir</span></code>. Ghostscript,
+command line with <code class="docutils literal notranslate"><span class="pre">-C-sFONTPATH=/path/to/fontdir</span></code>. Ghostscript,
 which is invoked by <a class="reference internal" href="../psconvert.html"><span class="doc">psconvert</span></a>, does
 not depend on file names. It will automatically find the relevant font
 files by their PostScript names and embed and subset them in
-PDF-files. This is quite convenient as the document can be displayed and
+PDF files. This is quite convenient as the document can be displayed and
 printed even on other computers when the font is not available locally.
 There is no need to convert your fonts as Ghostscript can handle
 all Type 1, TrueType and OpenType fonts. Note also, that you do not need
@@ -318,13 +314,11 @@ to edit Ghostscript’s Fontmap.</p>
 <p>If you do not want or cannot embed the fonts you can convert them to
 outlines (shapes with fills) with Ghostscript in the following
 way:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gs -q -dNOCACHE -dSAFER -dNOPAUSE -dBATCH -dNOPLATFONTS <span class="se">\</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gs -q -dNOCACHE -dNOSAFER -dNOPAUSE -dBATCH -dNOPLATFONTS <span class="se">\</span>
    -sDEVICE<span class="o">=</span>ps2write -sFONTPATH<span class="o">=</span><span class="s2">&quot;/path/to/fontdir&quot;</span> <span class="se">\</span>
    -sOutputFile<span class="o">=</span>mapWithOutlinedFonts.ps map.ps
 </pre></div>
 </div>
-</div></blockquote>
 <p>Note, that this only works with the <em>ps2write</em> device. If you need
 outlined fonts in PDF, create the PDF from the converted
 PostScript file. Also, <a class="reference internal" href="../psconvert.html"><span class="doc">psconvert</span></a>
@@ -370,7 +364,7 @@ only a small range of glyphs and you may have to switch the
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

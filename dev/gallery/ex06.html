@@ -229,8 +229,8 @@ this script:</p>
 gmt begin ex06
 	gmt subplot begin 2x1 -A+JTL+o0.3i -Fs6i/3.5i -M0.4i -X1.25i
 		gmt histogram -Bx+l<span class="s2">&quot;Topography (m)&quot;</span> -By+l<span class="s2">&quot;Frequency&quot;</span>+u<span class="s2">&quot; %&quot;</span> -BWSne+t<span class="s2">&quot;Histograms&quot;</span>+glightblue @v3206_06.txt <span class="se">\</span>
-			-R-6000/0/0/30 -Gorange -L1p -Z1 -W250 -c0
-		gmt rose @fractures_06.txt -: -A10r -S -Gorange -R0/1/0/360 -Bx0.2g0.2 -By30g30 -B+glightblue -W1p -c1
+			-R-6000/0/0/30 -Gorange -W1p -Z1 -T250 -c0
+		gmt rose @fractures_06.txt -: -A10r -S -Gorange -R0/1/0/360 -Bg -B+glightblue -W1p -c1
 	gmt subplot end
 gmt end show
 </pre></div>
@@ -264,7 +264,7 @@ gmt end show
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

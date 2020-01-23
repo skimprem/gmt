@@ -268,18 +268,21 @@ GRID FILE FORMAT below.)</dd>
 <dd>Set map boundary frame and axes attributes.</dd>
 </dl>
 <dl class="docutils" id="c">
-<dt><strong>-C</strong>[<em>cpt</em> |<em>master</em>[<strong>+i</strong><em>zinc</em>] |<em>color1,color2</em>[,<em>color3</em>,…]]</dt>
-<dd>The name of the CPT. Must be present if you want
-(1) mesh plot with contours (<strong>-Qm</strong>), or
-(2) shaded/colored perspective image (<strong>-Qs</strong> or
-<strong>-Qi</strong>). For <strong>-Qs</strong>: You can specify that you want to skip a
-z-slice by setting the red r/g/b component to -; to use a pattern give red =
-<strong>P|p</strong><em>pattern</em>[<strong>+b</strong><em>color</em>][<strong>+f</strong><em>color</em>][<strong>+r</strong><em>dpi</em>].
-Alternatively, supply the name of a GMT color master dynamic CPT [turbo, but
-geo for &#64;earth_relief and srtm for &#64;srtm_relief data] to
-automatically determine a continuous CPT from
-the grid’s z-range; you may round up/down the z-range by adding <strong>+i</strong><em>zinc</em>.
-If no argument is given to <strong>-C</strong> then under modern mode we select the current CPT.</dd>
+<dt><strong>-C</strong>[<em>cpt</em>|<em>master</em>[<strong>+h</strong>[<em>hinge</em>]][<strong>+i</strong><em>zinc</em>][<strong>+u</strong>|<strong>U</strong><em>unit</em>] |<em>color1,color2</em>[,<em>color3</em>,…]]</dt>
+<dd>Name of the CPT. Alternatively, supply the name of a GMT color master
+dynamic CPT [<em>turbo</em>, but we use <em>geo</em> for &#64;earth_relief and <em>srtm</em> for &#64;srtm_relief data] to
+automatically determine a continuous CPT from the grid’s <em>z</em>-range; you may round the range
+to the nearest multiple of <em>zinc</em> by adding <strong>+i</strong><em>zinc</em>. If given a GMT Master soft-hinge CPT
+(see <a class="reference internal" href="cookbook/cpts.html#of-colors-and-color-legends"><span class="std std-ref">Of Colors and Color Legends</span></a>) then you can enable the hinge at data value <em>hinge</em> [0] via <strong>+h</strong>,
+whereas for hard-hinge CPTs you can adjust the location of the hinge [0].
+For other CPTs, you may convert their <em>z</em>-values from meter to another distance unit (append <strong>+U</strong><em>unit</em>)
+or from another unit to meter (append <strong>+u</strong><em>unit</em>), with <em>unit</em> taken from
+<strong>e</strong>|<strong>f</strong>|<strong>k</strong>|<strong>M</strong>|<strong>n</strong>|<strong>u</strong>.
+Yet another option is to specify <strong>-C</strong><em>color1</em>,<em>color2</em>[,<em>color3</em>,…]
+to build a linear continuous CPT from those colors automatically.
+In this case <em>color</em><strong>n</strong> can be a r/g/b triplet, a color name,
+or an HTML hexadecimal color (e.g. #aabbcc).  If no argument is given to <strong>-C</strong>
+then under modern mode we select the current CPT.</dd>
 </dl>
 <dl class="docutils" id="g">
 <dt><a class="reference internal" href="#g"><span> <strong>-G</strong></span></a></strong><em>drapegrid</em> | <a class="reference internal" href="#g"><span> <strong>-G</strong></span></a></strong><em>grd_r</em> <a class="reference internal" href="#g"><span> <strong>-G</strong></span></a></strong><em>grd_g</em> <a class="reference internal" href="#g"><span> <strong>-G</strong></span></a></strong><em>grd_b</em></dt>
@@ -521,7 +524,7 @@ variations within polygons by using scanline conversion to image the polygons.</
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

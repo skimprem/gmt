@@ -277,14 +277,17 @@ Append <strong>+a</strong> to also affect the fore-, back-, and nan-colors
 [Default is no transparency, i.e., 0 (opaque)].</dd>
 </dl>
 <dl class="docutils" id="c">
-<dt><strong>-C</strong><em>cpt</em></dt>
-<dd>Selects the master color table CPT to use in the interpolation.
-Choose among the built-in tables (type <strong>makecpt</strong> to see the list)
-or give the name of an existing CPT [Default gives the turbo CPT].
-Yet another option is to specify -Ccolor1,color2[,color3,…]
-to build a linear continuous cpt from those colors automatically.
+<dt><strong>-C</strong>[<em>cpt</em>|<em>master</em>[<strong>+h</strong>[<em>hinge</em>]][<strong>+i</strong><em>zinc</em>][<strong>+u</strong>|<strong>U</strong><em>unit</em>] |<em>color1,color2</em>[,<em>color3</em>,…]]</dt>
+<dd>Name of the CPT. If given a GMT Master soft-hinge CPT (see <a class="reference internal" href="cookbook/cpts.html#of-colors-and-color-legends"><span class="std std-ref">Of Colors and Color Legends</span></a>) then
+you can enable the hinge at data value <em>hinge</em> [0] via <strong>+h</strong>, whereas for hard-hinge CPTs you
+can adjust the location of the hinge [0].  For other CPTs, you may convert their <em>z</em>-values
+from meter to another distance unit (append <strong>+U</strong><em>unit</em>) or from another unit to meter (append <strong>+u</strong><em>unit</em>),
+with <em>unit</em> taken from <strong>e</strong>|<strong>f</strong>|<strong>k</strong>|<strong>M</strong>|<strong>n</strong>|<strong>u</strong>.
+Alternatively, give <em>color1,color2</em>[<em>,color3</em>,…]
+to build a linear continuous CPT from those colors automatically,
+where <em>z</em> starts at 0 and is incremented by one for each color.
 In this case <em>color</em><strong>n</strong> can be a r/g/b triplet, a color name,
-or an HTML hexadecimal color (e.g. #aabbcc ).</dd>
+or an HTML hexadecimal color (e.g. #aabbcc).</dd>
 </dl>
 <dl class="docutils" id="d">
 <dt><strong>-D</strong>[<strong>i</strong>|<strong>o</strong>]</dt>
@@ -386,17 +389,13 @@ For details on array creation, see <a class="reference internal" href="#generate
 <dd>Do not interpolate the input color table but pick the output colors
 starting at the beginning of the color table, until colors for all
 intervals are assigned. This is particularly useful in combination
-with a categorical color table, like “categorical”. Cannot be used
-in combination with <strong>-Z</strong>.  Alternatively, use <strong>-Ww</strong> to produce
-a wrapped (cyclic) color table that endlessly repeats its range.</dd>
+with a categorical color table, like “categorical”. Alternatively,
+use <strong>-Ww</strong> to produce a wrapped (cyclic) color table that endlessly
+repeats its range.</dd>
 </dl>
 <dl class="docutils" id="z">
 <dt><strong>-Z</strong></dt>
-<dd>Creates a continuous CPT [Default is discontinuous, i.e.,
-constant colors for each interval]. This option has no effect when no <strong>-T</strong>
-is used, or when using <strong>-T</strong><em>z_min</em>/<em>z_max</em>; in the first case the input
-CPT remains untouched, in the second case it is only scaled to match the
-range <em>z_min</em>/<em>z_max</em>.</dd>
+<dd>Force a continuous CPT when building from a list of colors and a list of <em>z</em>-values [discrete].</dd>
 </dl>
 <dl class="docutils">
 <dt><strong>-bi</strong>[<em>ncols</em>][<strong>t</strong>] <a class="reference internal" href="gmt.html#bi-full"><span class="std std-ref">(more …)</span></a></dt>
@@ -438,8 +437,9 @@ mechanism of controlling transparency in such images on a pixel level.</p>
 <div class="section" id="generate-1d-array">
 <h2>Generate 1D Array<a class="headerlink" href="#generate-1d-array" title="Permalink to this headline">¶</a></h2>
 <p>Make an evenly spaced coordinate array from <em>min</em> to <em>max</em> in steps of <em>inc</em>.
-Append <strong>+b</strong> if we should take log2 of <em>min</em> and <em>max</em> and build an equidistant
-log2-array using <em>inc</em> integer increments in log2.
+Append <strong>+b</strong> if we should take log2 of <em>min</em> and <em>max</em>, get their nearest integers, build an equidistant
+log2-array using <em>inc</em> integer increments in log2, then undo the log2 conversion
+(e.g., 3/20/1+b will yield 4,8,16).
 Append <strong>+l</strong> if we should take log10 of <em>min</em> and <em>max</em> and build an
 array where <em>inc</em> can be 1 (every magnitude), 2, (1, 2, 5 times magnitude) or 3
 (1-9 times magnitude).  For less than every magnitude, use a negative integer <em>inc</em>.
@@ -471,16 +471,17 @@ and ocean across the shoreline, for instance).  CPTs with a hinge will
 have their two parts stretched to the required range separately, i.e.,
 the bottom part up to the hinge will be stretched independently of the
 part from the hinge to the top, according to the prescribed new range.
-If the selected range does not include the hinge then no such partitioning
-takes place.</p>
+Hinges are either <em>hard</em> or <em>soft</em>.  Soft hinges must be <em>activated</em> by
+appending <strong>+h</strong>[<em>hinge</em>] to the CPT name.
+If the selected range does not include an activated soft or hard hinge then
+we only resample colors from the half of the CPT that pertains to the range.
+See <a class="reference internal" href="cookbook/cpts.html#of-colors-and-color-legends"><span class="std std-ref">Of Colors and Color Legends</span></a> for more information.</p>
 </div>
-<div class="section" id="color-aliasing">
-<h2>Color Aliasing<a class="headerlink" href="#color-aliasing" title="Permalink to this headline">¶</a></h2>
-<p>For best result when <strong>-T -Z</strong> is used we recommend you do no append
-a specific <em>z_inc</em>.  This way the original CPT is used exactly
-as is but the <em>z</em> boundaries are adjusted to match the stated limits.
-Otherwise you may, depending on the nature of the input CPT, miss
-aspects of the color changes by aliasing the signal.</p>
+<div class="section" id="discrete-versus-continuous-cpt">
+<h2>Discrete versus Continuous CPT<a class="headerlink" href="#discrete-versus-continuous-cpt" title="Permalink to this headline">¶</a></h2>
+<p>All CPTs can be stretched, but only continuous CPTs can be sampled
+at new nodes (i.e., by given an increment in <strong>-T</strong>).  We impose this
+limitation to avoid aliasing the original CPT.</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
@@ -499,7 +500,7 @@ changes every 25, and using a polar blue-white-red colortable:</p>
 <p>To make an equidistant CPT from z = -2 to 6 using the
 continuous default turbo rainbow of colors:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt makecpt -T-2/6 -Z &gt; colors.cpt
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt makecpt -T-2/6 &gt; colors.cpt
 </pre></div>
 </div>
 </div></blockquote>
@@ -513,7 +514,7 @@ continuous default turbo rainbow of colors:</p>
 To create a 24-level color table suitable for plotting the depths in
 the remote ata table v3206_06.txt (with lon, lat, depths), run</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt makecpt -Cgebco @v3206_06.txt -i2 -Z -E24 &gt; my_depths.cpt
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt makecpt -Cgebco @v3206_06.txt -E24 &gt; my_depths.cpt
 </pre></div>
 </div>
 </div></blockquote>
@@ -535,7 +536,7 @@ earthquakes, use</p>
 <p>To make a continuous CPT from white to blue as z goes from
 3 to 10, try</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt makecpt -Cwhite,blue -T3,10 -Z &gt; cold.cpt
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt makecpt -Cwhite,blue -T3/10 &gt; cold.cpt
 </pre></div>
 </div>
 </div></blockquote>
@@ -619,7 +620,7 @@ directory.</p>
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

@@ -250,14 +250,13 @@ cat <span class="s">&lt;&lt; EOF &gt; pre.sh</span>
 <span class="c1"># 2. Set up the main frame script</span>
 cat <span class="s">&lt;&lt; EOF &gt; main.sh</span>
 <span class="s">gmt begin</span>
-<span class="s">	gmt set FONT_TAG 14p,Helvetica-Bold</span>
 <span class="s">	gmt grdimage -JG\${MOVIE_COL0}/\${MOVIE_COL1}/160/210/55/0/36/34/\${MOVIE_WIDTH}+ \</span>
 <span class="s">		-Rg @USEast_Coast.nc -Iint_US.nc -Cglobe_US.cpt -X0 -Y0</span>
 <span class="s">	gmt plot -W1p flight_path.txt</span>
 <span class="s">gmt end</span>
 <span class="s">EOF</span>
 <span class="c1"># 3. Run the movie</span>
-gmt movie main.sh -C7.2ix4.8ix100 -Nanim04 -Tflight_path.txt -Sbpre.sh -Z -H2 -Lf+o0.1i <span class="nv">$opt</span>
+gmt movie main.sh -C7.2ix4.8ix100 -Nanim04 -Tflight_path.txt -Sbpre.sh -Z -H2 -Lf+o0.1i+f14p,Helvetica-Bold <span class="nv">$opt</span>
 rm -f main.sh pre.sh
 </pre></div>
 </div>
@@ -293,7 +292,7 @@ rm -f main.sh pre.sh
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

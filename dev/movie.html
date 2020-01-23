@@ -217,18 +217,21 @@
 <p><strong>gmt movie</strong> <em>mainscript</em>
 <a class="reference internal" href="#c"><span> <strong>-C</strong></span></a></strong><em>canvas</em>
 <a class="reference internal" href="#n"><span> <strong>-N</strong></span></a></strong><em>prefix</em>
-<a class="reference internal" href="#t"><span> <strong>-T</strong></span></a></strong><em>nframes</em>|<em>timefile</em>[<strong>+p</strong><em>width</em>][<strong>+s</strong><em>first</em>][<strong>+w</strong>]
+<a class="reference internal" href="#t"><span> <strong>-T</strong></span></a></strong><em>nframes</em>|<em>min</em>/<em>max</em>/<em>inc</em>[<strong>+n</strong>]|<em>timefile</em>[<strong>+p</strong><em>width</em>][<strong>+s</strong><em>first</em>][<strong>+w</strong>]
 [ <a class="reference internal" href="#a"><span> <strong>-A</strong></span></a></strong>[<strong>+l</strong>[<em>n</em>]][<strong>+s</strong><em>stride</em>] ]
 [ <a class="reference internal" href="#d"><span> <strong>-D</strong></span></a></strong><em>displayrate</em> ]
+[ <a class="reference internal" href="#e"><span> <strong>-E</strong></span></a></strong><em>titlepage</em>[<strong>+d</strong><em>duration</em>[<strong>s</strong>]][<strong>+f</strong>[<strong>+i</strong>|<strong>o</strong>]<em>fade</em>[<strong>s</strong>]] ]
 [ <a class="reference internal" href="#f"><span> <strong>-F</strong></span></a></strong><em>format</em>[<strong>+o</strong><em>options</em>]]
-[ <a class="reference internal" href="#g"><span> <strong>-G</strong></span></a></strong><em>fill</em>]
+[ <a class="reference internal" href="#g"><span> <strong>-G</strong></span></a></strong>[<em>fill</em>][<strong>+p</strong><em>pen</em>] ]
 [ <a class="reference internal" href="#h"><span> <strong>-H</strong></span></a></strong><em>factor</em>]
 [ <a class="reference internal" href="#i"><span> <strong>-I</strong></span></a></strong><em>includefile</em> ]
+[ <a class="reference internal" href="#k"><span> <strong>-K</strong></span></a></strong>[<strong>+i</strong>|<strong>o</strong>]<em>fade</em>[<strong>s</strong>][<strong>+p</strong>] ]
 [ <a class="reference internal" href="#l"><span> <strong>-L</strong></span></a></strong><em>labelinfo</em> ]
 [ <a class="reference internal" href="#m"><span> <strong>-M</strong></span></a></strong>[<em>frame</em>],[<em>format</em>] ]
+[ <a class="reference internal" href="#p"><span> <strong>-P</strong></span></a></strong><em>progress</em> ]
 [ <a class="reference internal" href="#q"><span> <strong>-Q</strong></span></a></strong>[<strong>s</strong>] ]
-[ <strong>-Sb</strong><em>backgroundscript</em> ]
-[ <strong>-Sf</strong><em>foregroundscript</em> ]
+[ <strong>-Sb</strong><em>background</em> ]
+[ <strong>-Sf</strong><em>foreground</em> ]
 [ <a class="reference internal" href="#v"><span> <strong>-V</strong></span></a></strong>[<em>level</em>] ]
 [ <a class="reference internal" href="#z"><span> <strong>-Z</strong></span></a></strong> ]
 [ <a class="reference internal" href="#w"><span> <strong>-W</strong></span></a></strong><em>workdir</em> ]
@@ -284,8 +287,9 @@ Note: If the subdirectory exist then we exit immediately.  You are therefore req
 old directory by that name first.  This is done to prevent the accidental loss of valuable data.</dd>
 </dl>
 <dl class="docutils" id="t">
-<dt><strong>-T</strong><em>nframes</em>|<em>timefile</em>[<strong>+p</strong><em>width</em>][<strong>+s</strong><em>first</em>][<strong>+w</strong>]</dt>
-<dd>Either specify how many image frames to make or supply a file with a set of parameters,
+<dt><strong>-T</strong><em>nframes</em>|<em>min</em>/<em>max</em>/<em>inc</em>[<strong>+n</strong>]|<em>timefile</em>[<strong>+p</strong><em>width</em>][<strong>+s</strong><em>first</em>][<strong>+w</strong>]</dt>
+<dd>Either specify how many image frames to make, create a one-column data set width values from
+<em>min</em> to <em>max</em> every <em>inc</em> (append <strong>+n</strong> if <em>inc</em> is number of frames instead), or supply a file with a set of parameters,
 one record (i.e., row) per frame.  The values in the columns will be available to the
 <em>mainscript</em> as named variables <strong>MOVIE_COL0</strong>, <strong>MOVIE_COL1</strong>, etc., while any trailing text
 can be accessed via the variable <strong>MOVIE_TEXT</strong>.  Append <strong>+w</strong> to split the trailing
@@ -315,6 +319,14 @@ to only use every <em>stride</em> frame, with <em>stride</em> being one of a fix
 <dt><strong>-D</strong><em>displayrate</em></dt>
 <dd>Set the display frame rate in frames per seconds for the final animation [24].</dd>
 </dl>
+<dl class="docutils" id="e">
+<dt><strong>-E</strong><em>titlepage</em>[<strong>+d</strong><em>duration</em>[<strong>s</strong>]][<strong>+f</strong>[<strong>i</strong>|<strong>o</strong>]<em>fade</em>[<strong>s</strong>]]</dt>
+<dd>Give <em>titlepage</em> script that creates a static title page for the movie [no title].
+Alternatively, <em>titlepage</em> can be a PostScript plot layer of dimensions exactly matching the cancas size.
+Control how long it should be displayed with <strong>+d</strong> in number of frames (append <em>s*</em> for duration in seconds instead) [4s].
+Optionally, supply <em>fade</em> <strong>i</strong>n and <strong>o</strong>ut durations (in frames or seconds [1s]) as well [no fading].
+Fading affects the beginning and end of the title page <em>duration</em>.</dd>
+</dl>
 <dl class="docutils" id="f">
 <dt><strong>-F</strong><em>format</em>[<strong>+o</strong><em>options</em>]</dt>
 <dd>Set the format of the final video product.  Repeatable.  Choose either <strong>mp4</strong> (MPEG-4 movie) or
@@ -323,8 +335,9 @@ via the <strong>+o</strong> modifier (in quotes if more than one word). If <stro
 be created at all; this requires <strong>-M</strong>.</dd>
 </dl>
 <dl class="docutils" id="g">
-<dt><strong>-G</strong><em>fill</em> <a class="reference internal" href="cookbook/features.html#gfill-attrib"><span class="std std-ref">(more …)</span></a></dt>
-<dd>Set the canvas color or fill before plotting commences [none].</dd>
+<dt><strong>-G</strong>[<em>fill</em>][<strong>+p</strong><em>pen</em>] <a class="reference internal" href="cookbook/features.html#gfill-attrib"><span class="std std-ref">(more …)</span></a></dt>
+<dd>Set the canvas color or fill before plotting commences [none].
+Optionally, append <strong>+p</strong> to draw the canvas outline with <em>pen</em> [no outline].</dd>
 </dl>
 <dl class="docutils" id="h">
 <dt><strong>-H</strong><em>factor</em></dt>
@@ -345,15 +358,25 @@ result to avoid aliasing [no downsampling].  This effect is called <cite>sub-pix
 This mechanism is used to add information (typically constant variable assignments) that the <em>mainscript</em>
 and any optional <strong>-S</strong> scripts rely on.</dd>
 </dl>
+<dl class="docutils" id="k">
+<dt><strong>-K</strong>[<strong>+i</strong>|<strong>o</strong>]<em>fade</em>[<strong>s</strong>][<strong>+p</strong>]</dt>
+<dd>Add fading in and out for the main animation sequence [no fading]. Append
+the length of the fading in number of frames (or seconds by appending <strong>s</strong>) [1s].
+For different lengths of fading in and out you can repeat the <strong>-K</strong> option
+by appending the <strong>i</strong> or <strong>o</strong> directives.  Normally, fading will affect the
+first and last animation frames.  Append <strong>+p</strong> to preserve these by instead
+fading in and out on only the first and last (repeated) animation frames.</dd>
+</dl>
 <dl class="docutils" id="l">
 <dt><strong>-L</strong><em>labelinfo</em></dt>
 <dd>Automatic labeling of individual frames.  Repeatable up to 32 labels.  Places the chosen label at the frame perimeter:
 <strong>e</strong> selects the elapsed time in seconds as the label; append <strong>+s</strong><em>scale</em> to set the length
 in seconds of each frame [Default is 1/<em>framerate</em>],
 <strong>s</strong><em>string</em> uses the fixed text <em>string</em> as the label,
-<strong>f</strong> selects the running frame number as the label, <strong>c</strong><em>col</em> uses the value in column
+<strong>f</strong> selects the running frame number as the label, <strong>p</strong> selects the percentage of progress so far,
+<strong>c</strong><em>col</em> uses the value in column
 number <em>col</em> of <em>timefile</em> as label (first column is 0), while <strong>t</strong><em>col</em> uses word number
-<em>col</em> from the trailing text in <em>timefile</em> (requires <strong>-T</strong>…<strong>+w</strong>; first word is 0).  Note: If you use <strong>-Lc</strong>
+<em>col</em> from the trailing text in <em>timefile</em> (first word is 0).  Note: If you use <strong>-Lc</strong>
 with an absolute time column, then the format of the timestamp will depend on the two default settings
 <a class="reference internal" href="gmt.conf.html#format-date-map"><span class="std std-ref">FORMAT_DATE_MAP</span></a> and <a class="reference internal" href="gmt.conf.html#format-clock-map"><span class="std std-ref">FORMAT_CLOCK_MAP</span></a>.  By default,
 both <em>date</em> and <em>time</em> are displayed (with a space between); set one of the settings to “-” to skip that component.
@@ -375,6 +398,18 @@ or floating point  (%e, %f, %g) format specification.</dd>
 be written to the current directory with name <em>prefix.format</em>, where <em>format</em> can one of the
 graphics extensions from the allowable graphics <a class="reference internal" href="begin.html#tbl-formats"><span class="std std-ref">formats</span></a> [pdf].</dd>
 </dl>
+<dl class="docutils" id="p">
+<dt><strong>-P</strong><em>progress</em></dt>
+<dd>Automatic placement of progress indicator(s). Repeatable up to 32 indicators.  Places the chosen indicator at the frame perimeter.
+Select from six indicators called a-f [a].  Indicators a-c are different types of circular indicators while d-f are
+linear (axis-like) indicators.  Specify dimension of the indicator with <strong>+w</strong><em>width</em> [5% of max canvas dimension for
+circular indicators and 60% of relevant canvas dimension for the linear indicators] and placement via <strong>+j</strong><em>justify</em>
+[TR for circular and BC for axes]. Indicators b-f can optionally add annotations if modifier <strong>+a</strong> is used, append one of
+<strong>e</strong>|<strong>f</strong>|<strong>p</strong>|<strong>s</strong>|<strong>c</strong><em>col</em> |<strong>t</strong><em>col</em> to indicate what should be annotated (see <strong>-L</strong>
+for more information on what these are); append <strong>+f</strong> to use a specific <em>font</em> [<a class="reference internal" href="gmt.conf.html#font-annot-secondary"><span class="std std-ref">FONT_ANNOT_SECONDARY</span></a> scaled as needed].
+Append <strong>+o</strong><em>dx</em>[/<em>dy</em>] to offset indicator in direction implied by <em>justify</em>.  Append <strong>+g</strong> to set moving item <em>fill</em> color [see below for defaults].
+Use <strong>+p</strong><em>pen</em> to set moving item <em>pen</em>.  For corresponding static fill and pen, use <strong>+G</strong> and <strong>+P</strong> instead.</dd>
+</dl>
 <dl class="docutils" id="q">
 <dt><strong>-Q</strong>[<strong>s</strong>]</dt>
 <dd>Debugging: Leave all files and directories we create behind for inspection.  Alternatively, append <strong>s</strong> to
@@ -383,18 +418,20 @@ background script derived from <strong>-Sb</strong> which is always executed sin
 building the movie scripts.</dd>
 </dl>
 <dl class="docutils" id="sb">
-<dt><strong>-Sb</strong><em>backgroundscript</em></dt>
-<dd>The optional GMT modern mode <em>backgroundscript</em> (written in the same scripting language as <em>mainscript</em>) can be
+<dt><strong>-Sb</strong><em>background</em></dt>
+<dd>The optional GMT modern mode <em>background</em> (written in the same scripting language as <em>mainscript</em>) can be
 used for one or two purposes: (1) It may create files (such as <em>timefile</em>) that will be needed by <em>mainscript</em>
 to make the movie, and (2) It may make a static background plot that should form the background for all frames.
 If a plot is generated the script must make sure it uses the same positioning (i.e., <strong>-X -Y</strong>) as the main script
-so that the layered plot will stack correctly (unless you actually want a different offset).</dd>
+so that the layered plot will stack correctly (unless you actually want a different offset).  Alternatively,
+<em>background</em> can be a PostScript plot layer of dimensions exactly matching the cancas size.</dd>
 </dl>
 <dl class="docutils" id="sf">
-<dt><strong>-Sf</strong><em>foregroundscript</em></dt>
-<dd>The optional GMT modern mode <em>foregroundscript</em> (written in the same scripting language as <em>mainscript</em>) can be
+<dt><strong>-Sf</strong><em>foreground</em></dt>
+<dd>The optional GMT modern mode <em>foreground</em> (written in the same scripting language as <em>mainscript</em>) can be
 used to make a static foreground plot that should be overlain on all frames.  Make sure the script uses the same
-positioning (i.e., <strong>-X -Y</strong>) as the main script so that the layers will stack correctly.</dd>
+positioning (i.e., <strong>-X -Y</strong>) as the main script so that the layers will stack correctly.  Alternatively,
+<em>foreground</em> can be a PostScript plot layer of dimensions exactly matching the cancas size.</dd>
 </dl>
 <dl class="docutils" id="movie-v">
 <dt><strong>-V</strong>[<em>level</em>] <a class="reference internal" href="gmt.html#v-full"><span class="std std-ref">(more …)</span></a></dt>
@@ -433,7 +470,7 @@ any module-specific option (but not the GMT common options), then exit.</dd>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <p>Several parameters are automatically assigned and can be used when composing <em>mainscript</em> and the optional
-<em>backgroundscript</em> and <em>foregroundscript</em> scripts. There are two sets of parameters: Those that are constants
+<em>background</em> and <em>foreground</em> scripts. There are two sets of parameters: Those that are constants
 and those that change with the frame number.  The constants are accessible by all the scripts:
 <strong>MOVIE_WIDTH</strong>: The width of the canvas,
 <strong>MOVIE_HEIGHT</strong>: The height of the canvas,
@@ -447,7 +484,8 @@ In addition, the <em>mainscript</em> also has access to parameters that vary wit
 <strong>MOVIE_NAME</strong>: The name prefix for the current frame (i.e., <em>prefix</em>_<strong>MOVIE_TAG</strong>),
 Furthermore, if a <em>timefile</em> was given then variables <strong>MOVIE_COL0</strong>, <strong>MOVIE_COL1</strong>, etc. are
 also set, yielding one variable per column in <em>timefile</em>.  If <em>timefile</em> has trailing text then that text can
-be accessed via the variable <strong>MOVIE_TEXT</strong>, and if word-splitting was requested by <strong>-T+w</strong> then
+be accessed via the variable <strong>MOVIE_TEXT</strong>, and if word-splitting was explicitly requested by <strong>-T+w</strong> or
+implicitly by selecting word labels in <strong>-F</strong> or <strong>-P</strong>) then
 the trailing text is also split into individual word parameters <strong>MOVIE_WORD0</strong>, <strong>MOVIE_WORD1</strong>, etc.</p>
 </div>
 <div class="section" id="data-files">
@@ -465,10 +503,21 @@ slightly (1.6%) larger than the corresponding SI sizes (9.6 x 5.4” or 9.6 x 7.
 frames but allow us to use good sizes that work well with the dpu chosen.  You should compose your plots using
 the given canvas size, and <strong>movie</strong> will make proper conversions of the canvas to image pixel dimensions. It is your responsibility
 to use <strong>-X -Y</strong> to allow for suitable margins and any positioning of items on the canvas.  To minimize processing time it is
-recommended that any static part of the movie be considered either a static background (to be made once by <em>backgroundscript</em>) and/or
-a static foreground (to be made once by <em>foregroundscript</em>); <strong>movie</strong> will then assemble these layers per frame.  Also, any computation of
-static data files to be used in the loop over frames can be produced by <em>backgroundscript</em>.  Any data or variables that depend on the
+recommended that any static part of the movie be considered either a static background (to be made once by <em>background</em>) and/or
+a static foreground (to be made once by <em>foreground</em>); <strong>movie</strong> will then assemble these layers per frame.  Also, any computation of
+static data files to be used in the loop over frames can be produced by <em>background</em>.  Any data or variables that depend on the
 frame number must be computed or set by <em>mainscript</em> or provided via the parameters as discussed above.</p>
+</div>
+<div class="section" id="external-postscript-layers">
+<h2>External PostScript Layers<a class="headerlink" href="#external-postscript-layers" title="Permalink to this headline">¶</a></h2>
+<p>Instead of passing GMT modern scripts to <strong>-S</strong> you can alternatively provide the name of PostScript
+plot layer files. Note that these must exactly match the canvas size.  As a simple example, if you are
+making a HD movie using the US unit dimensions then a background pink layer would be created by:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt basemap -R0/9.6/0/5.4 -Jx1i -B+gpink -X0 -Y0 --PS_MEDIA<span class="o">=</span><span class="m">9</span>.6ix5.4i -ps background
+</pre></div>
+</div>
+<p>Note the canvas selection via <a class="reference internal" href="gmt.conf.html#ps-media"><span class="std std-ref">PS_MEDIA</span></a>, the matching region and projection, and
+the zero location of the origin.</p>
 </div>
 <div class="section" id="technical-details">
 <h2>Technical Details<a class="headerlink" href="#technical-details" title="Permalink to this headline">¶</a></h2>
@@ -512,12 +561,53 @@ files and pass those names to the modules that require CPT information.  In mode
 you need to use the <strong>-H</strong> option in <a class="reference internal" href="makecpt.html"><span class="doc">makecpt</span></a> or <a class="reference internal" href="grd2cpt.html"><span class="doc">grd2cpt</span></a> in order to redirect their output
 to named files.</p>
 </div>
+<div class="section" id="progress-indicators">
+<h2>Progress Indicators<a class="headerlink" href="#progress-indicators" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="_images/GMT_movie_progress.png"><img alt="_images/GMT_movie_progress.png" src="_images/GMT_movie_progress.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">The six types of movie progress indicators.  All have default sizes, placements, colors and pens (shown)
+but these can be overridden by the corresponding modifiers (see below).</span></p>
+</div>
+<p>The letters a-f select one of the six progress indicators shown above.
+Indicator a) needs a static [lightgreen] and moving [lightred]
+<em>fill</em> (set via <strong>+G</strong> and <strong>+g</strong>); there is no label option.
+Indicator b) takes a static [lightblue] and moving [blue] <em>pen</em> (set via <strong>+P</strong> and <strong>+p</strong>),
+and if <strong>+a</strong> is set we place a centered label with a font size scaled to 30%
+of indicator size (unless <strong>+f</strong> was set which is used as given).
+Indicator c) takes a static [dashed darkred, pen width is 1% of indicator size] and moving [red]
+<em>pen</em> (default pen width is 5% of indicator size) for a circular arrow (head size is 20% of indicator size), with a central
+label (if given <strong>+a</strong>) with a font size 30% of indicator size (unless <strong>+f</strong> was set which we will honor).
+Indicator d) takes a static [black] and moving [yellow, width 0.5% of length] <em>pen</em> for a rounded line with a cross-mark. If
+label is requested (<strong>+a</strong>) we use a font size that is twice the static pen thickness (unless <strong>+f</strong> was set).
+Indicator e) takes a static [red] and moving [lightgreen] <em>pen</em>. If labels are requested (<strong>+a</strong>) we
+use a font size that is twice the static pen thickness (unless <strong>+f</strong> was set).
+Finally, indicator f) takes a <em>pen</em> for the static axis [black] and a <em>fill</em> for the moving triangle [red];
+the triangle size is scaled to twice the axis width (see below), and a font size scaled to thrice the axis width.
+Note for indicators d-f: If percentage labels are selected (<strong>+ap</strong>), then the axes display a unit label,
+otherwise no unit label is supplied.  The indicators d-f are horizontal for all <em>justify</em> codes except for <strong>ML</strong> and <strong>MR</strong>.
+The default pen thickness for the linear static lines is the smallest of 2.5% of their lengths and 8p (1.5% and 3p for f).
+If no size is specified (<strong>+w</strong>) then we default to 5% of cancas width for the three circular indicators and
+60% of the relevant canvas dimension for the linear indicators.</p>
+</div>
+<div class="section" id="title-sequence-and-fading">
+<h2>Title Sequence and Fading<a class="headerlink" href="#title-sequence-and-fading" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_images/GMT_title_fade.png"><img alt="_images/GMT_title_fade.png" src="_images/GMT_title_fade.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">The fade-level (0 means black, 100 means normal visibility) for the complete movie, including
+an optional title sequence.</span></p>
+</div>
+<p>The complete movie may have a leading title sequence (<strong>-E</strong>) of given <em>duration</em>. A short section
+at the beginning and end may be designated to fade in/out via black.  The main animation
+sequence may also have fade in/out (<strong>-K</strong>). Here, you can choose to fade in/out during the beginning and end section of
+the animation or you can “freeze” the first and last animation frame and only fade in/out using
+those static images (via modifier <strong>+p</strong> to preserve the whole animation sequence).</p>
+</div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <p>To make an animated GIF movie based on the script globe.sh, which simply spins a globe using the
 frame number to serve as the view longitude, using a custom square 600x600 pixel canvas and 360 frames,
-and place a frame counter in the top left corner, try:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt movie globe.sh -Nglobe -T360 -Agif -C6ix6ix100 -Lf
+place a frame counter in the top left corner, and place a progress indicator in the top right corner, try:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt movie globe.sh -Nglobe -T360 -Agif -C6ix6ix100 -Lf -P
 </pre></div>
 </div>
 <p>Here, the globe.sh bash script simply plots a map with <a class="reference internal" href="coast.html"><span class="doc">coast</span></a> but uses the frame number variable
@@ -529,7 +619,7 @@ gmt end
 </div>
 <p>As the automatic frame loop is executed the different frames will be produced with different
 longitudes.  The equivalent DOS batch script setup would be:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt movie globe.bat -Nglobe -T360 -Agif -C6ix6ix100 -Lf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt movie globe.bat -Nglobe -T360 -Agif -C6ix6ix100 -Lf -P
 </pre></div>
 </div>
 <p>Now, the globe.bat DOS script is simply:</p>
@@ -603,7 +693,7 @@ ffmpeg -i top.mp4 -i bottom.mp4 -filter_complex <span class="nv">vstack</span><s
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

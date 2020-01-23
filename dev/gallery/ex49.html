@@ -244,7 +244,7 @@ gmt begin ex49
 	gmt grdcontour age_pixel.nc -A+f14p -Ct.cpt -Wa0.1p+c -GL30W/22S/5E/13S
 	gmt colorbar -Cz.cpt -DjTR+w2i/0.15i+h+o0.3i/0.15i -Baf+u<span class="s2">&quot; km&quot;</span> -W0.001 -F+p1p+gbeige
 	<span class="c1"># Obtain depth, age pairs by dumping grids and pasting results</span>
-	gmt grd2xyz age_pixel.nc   -bof &gt; age.bin
+	gmt grd2xyz age_pixel.nc -bof &gt; age.bin
 	gmt grd2xyz @depth_pixel.nc -bof &gt; depth.bin
 	gmt convert -A age.bin depth.bin -bi3f -o2,5,5 -bo3f &gt; depth-age.bin
 	<span class="c1"># Create and map density grid of (age,depth) distribution</span>
@@ -312,7 +312,7 @@ gmt end show
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

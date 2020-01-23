@@ -134,9 +134,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#categorical-cpts">3.19.1. Categorical CPTs</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#regular-cpts">3.19.2. Regular CPTs</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#master-dynamic-cpts">3.19.3. Master (dynamic) CPTs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#cyclic-wrapped-cpts">3.19.4. Cyclic (wrapped) CPTs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#manipulating-cpts">3.19.5. Manipulating CPTs</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#automatic-cpts">3.19.6. Automatic CPTs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cpts-from-color-lists">3.19.4. CPTs from color lists</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cyclic-wrapped-cpts">3.19.5. Cyclic (wrapped) CPTs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#manipulating-cpts">3.19.6. Manipulating CPTs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#automatic-cpts">3.19.7. Automatic CPTs</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#the-drawing-of-vectors">3.20. The Drawing of Vectors</a></li>
@@ -1467,44 +1468,86 @@ on topography by using the former for colors and the latter for shading.</p>
 <h3>3.19.3. Master (dynamic) CPTs<a class="headerlink" href="#master-dynamic-cpts" title="Permalink to this headline">¶</a></h3>
 <p>The CPTs distributed with GMT are <em>dynamic</em>.  This means they have several
 special properties that modify the behavior of programs that use them.
-All dynamic CPTs are normalized in one of two ways: If a CPT was designed
+Dynamic CPTs comes in a few different flavors: Some CPTs were designed
 to behave differently across a <em>hinge</em> value (e.g., a CPT designed specifically
 for topographic relief may include a discontinuity in color across the
-coastline at <em>z = 0</em>), then the CPT’s <em>z</em>-values will range from -1, via 0
-at the hinge, to +1 at the other end.  The hinge value is specified via the special
-comment</p>
+coastline at <em>z = 0</em>), and when users select these CPTs they will be stretched
+to fit the user’s desired data range separately for each side of this <em>hard</em> hinge.
+Basically, a <em>hard</em> hinge CPT is the juxtaposition of two different CPTs joined
+at the hinge and these sections are stretched independently. Such CPT files
+are identified as such via the special comment</p>
 <div class="line-block">
-<div class="line"><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">HINGE</span> <span class="pre">=</span> <span class="pre">&lt;hinge-value&gt;</span></code></div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">HARD_HINGE</span></code></div>
 </div>
-<p>CPTs without a hinge are instead normalized with <em>z</em>-values from 0 to 1.
-Dynamic CPTs will need to be stretched to the user’s preferred range, and there
+<p>and all hard hinges occur at data value <em>z = 0</em> (but you can change this value by
+adding <strong>+h</strong><em>value</em> to the name of the CPT).
+Other CPTs may instead have a <em>soft</em> hinge which indicates a natural hinge or transition
+point in the CPT itself, unrelated to any natural data set <em>per se</em>. These CPTs
+are flagged by the special comment</p>
+<div class="line-block">
+<div class="line"><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">SOFT_HINGE</span></code></div>
+</div>
+<p>CPTs with soft hinges behave as regular (non-hinge) CPTs <em>unless</em> the user activates then by
+appending <strong>+h</strong>[<em>hinge</em>] to the CPT name.  This modifier will convert the soft
+hinge into a hard hinge at the user-specified data value <em>hinge</em> [which defaults to 0].
+Note that if your specified data range <em>excludes</em> an activated soft or hard hinge then we
+only perform color sampling from the <em>half</em> of the CPT that pertains to the data range.
+All dynamic CPTs will need to be stretched to the user’s preferred range, and there
 are two modes of such scaling: Some CPTs designed for a specific application
 (again, the topographic relief is a good example) have a <em>default range</em>
 specified in the master table via the special comment</p>
 <div class="line-block">
 <div class="line"><code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">RANGE</span> <span class="pre">=</span> <span class="pre">&lt;zmin/zmax&gt;</span></code></div>
 </div>
-<p>and when used by applications the normalized <em>z</em>-values will be stretched to reflect
-this natural range.  In contrast, CPTs without a natural range are instead
+<p>and when used by applications the CPT may be automatically stretched to reflect
+this natural range.  In contrast, dynamic CPTs <em>without</em> a natural range are instead
 stretched to fit the range of the data in question (e.g., a grid’s range).
-Exceptions to these rules are implemented in the two CPT-producing modules
+Exceptions to these rules are implemented in the two <em>CPT-producing</em> modules
 <a class="reference internal" href="../makecpt.html"><span class="doc">makecpt</span></a> and <a class="reference internal" href="../grd2cpt.html"><span class="doc">grd2cpt</span></a>, both of which can read dynamic CPTs
 and produce <em>static</em> CPTs satisfying a user’s specific range needs.  These
-tools can also read static CPTs where the new range must be specified (or computed
+tools can also read static CPTs for which a new range must be specified (or computed
 from data), reversing the order of colors, and even isolating a section
-of an incoming CPT.  Here, <a class="reference internal" href="../makecpt.html"><span class="doc">makecpt</span></a> can be told the range of compute it from data tables
-while <a class="reference internal" href="../grd2cpt.html"><span class="doc">grd2cpt</span></a> can derive the range from one or more grids.</p>
+of an incoming CPT.  Here, <a class="reference internal" href="../makecpt.html"><span class="doc">makecpt</span></a> can be told the data range or compute
+it from data tables while <a class="reference internal" href="../grd2cpt.html"><span class="doc">grd2cpt</span></a> can derive the range from one or more grids.</p>
 <div class="figure align-center" id="id32">
 <a class="reference internal image-reference" href="../_images/GMT_hinge.png"><img alt="../_images/GMT_hinge.png" src="../_images/GMT_hinge.png" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">The top color bar is a dynamic master CPT (here, globe) with a hinge at sea level and
+<p class="caption"><span class="caption-text">The top color bar is a dynamic master CPT (here, globe) with a hard hinge at sea level and
 a natural range from -10,000 to +10,000 meters. However, our data range
 is asymmetrical, going from -8,000 meter depths up to +3,000 meter elevations.
 Because of the hinge, the two sides of the CPT will be stretched separately
 to honor the desired range while utilizing the full color range.</span></p>
 </div>
+<p>All CPT master tables can be found in Chapter <a class="reference internal" href="cpts.html#of-colors-and-color-legends"><span class="std std-ref">Of Colors and Color Legends</span></a>
+where those with hard or soft hinges are identified by triangles at their hinges.</p>
+</div>
+<div class="section" id="cpts-from-color-lists">
+<h3>3.19.4. CPTs from color lists<a class="headerlink" href="#cpts-from-color-lists" title="Permalink to this headline">¶</a></h3>
+<p>GMT can build color tables “on the fly” from a comma-separated list of colors
+and a range of <em>z</em>-values to go with them.  As illustrated below, there are
+four different ways to create such CPTs. In this example, we will operate with
+a list of three colors: red,yellow and purple, given to modules with the option <strong>-C</strong>red,yellow,purple,
+and utilize a fixed data range of <em>z = 0-6</em>.
+Four different CPTs result because we either select a <em>continuous</em> or <em>discrete table</em>, and because the <em>z</em>-intervals are
+either <em>equidistant</em> or <em>arbitrary</em>.  The top continuous color table with equidistant spacing (a) is selected
+with the range <strong>-T</strong>0/6, meaning the colors will continuously change from red (at <em>z = 0</em>) via
+yellow (at <em>z = 3</em>) to purple (at <em>z = 6</em>). Next, a discrete table with the same range (b)
+is obtained with <strong>-T</strong>0/6/2, yielding colors that are either constant red (<em>z = 0-2</em>), yellow (<em>z = 2-4</em>)
+or purple (<em>z = 4-6</em>). The next discrete table (c) illustrates how to specify arbitrary
+node points in the CPT by providing a comma-separated list of values (<strong>-T</strong>0,4,5.5,6). Now, the constant
+color intervals have unequal ranges, illustrated by red (<em>z = 0-4</em>), yellow (<em>z = 4-5.5</em>) and purple (<em>z = 5.5-6</em>).  Finally, we
+create a continuous color table (d) with arbitrary nodes by giving <strong>-T</strong>0,2,6 and adding <strong>-Z</strong>;
+the latter option forces a continuous CPT pinned to a given list of node values.  Now, the colors
+continuously change from red (at <em>z = 0</em>) via yellow (at <em>z = 2</em>) to purple (at <em>z = 6</em>).
+Modules that obtain the <em>z</em>-range indirectly (e.g., <a class="reference internal" href="../grdimage.html"><span class="doc">grdimage</span></a>) may use the exact data range
+to set the quivalent of a <strong>-T</strong><em>min/max</em> option.  You may append <strong>+i</strong><em>dz</em> to the
+color list to have the <em>min</em> and <em>max</em> values rounded down and up to nearest multiple of <em>dz</em>, respectively.</p>
+<div class="figure align-center" id="id33">
+<a class="reference internal image-reference" href="../_images/GMT_colorlist.png"><img alt="../_images/GMT_colorlist.png" src="../_images/GMT_colorlist.png" style="width: 500px;" /></a>
+<p class="caption"><span class="caption-text">Lists of colors (here red,yellow,purple) can be turned into discrete or continuous CPT tables on the fly.</span></p>
+</div>
 </div>
 <div class="section" id="cyclic-wrapped-cpts">
-<h3>3.19.4. Cyclic (wrapped) CPTs<a class="headerlink" href="#cyclic-wrapped-cpts" title="Permalink to this headline">¶</a></h3>
+<h3>3.19.5. Cyclic (wrapped) CPTs<a class="headerlink" href="#cyclic-wrapped-cpts" title="Permalink to this headline">¶</a></h3>
 <p>Any color table you produce can be turned into a cyclic or <em>wrapped</em> color table.
 This is performed by adding the <strong>-Ww</strong> option when running <a class="reference internal" href="../makecpt.html"><span class="doc">makecpt</span></a> or
 <a class="reference internal" href="../grd2cpt.html"><span class="doc">grd2cpt</span></a>.  This option simply adds the special comment</p>
@@ -1516,13 +1559,13 @@ value it will remove an integer multiple of the <em>z</em>-range represented by 
 color table so that we are always inside the range of the color table.  This
 means that the fore- and back-ground colors can never be activated.  Wrapped
 color tables are useful for highlighting small changes.</p>
-<div class="figure align-center" id="id33">
+<div class="figure align-center" id="id34">
 <a class="reference internal image-reference" href="../_images/GMT_cyclic.png"><img alt="../_images/GMT_cyclic.png" src="../_images/GMT_cyclic.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Cyclic color bars are indicated by a cycle symbol on the left side of the bar.</span></p>
 </div>
 </div>
 <div class="section" id="manipulating-cpts">
-<span id="id10"></span><h3>3.19.5. Manipulating CPTs<a class="headerlink" href="#manipulating-cpts" title="Permalink to this headline">¶</a></h3>
+<span id="id10"></span><h3>3.19.6. Manipulating CPTs<a class="headerlink" href="#manipulating-cpts" title="Permalink to this headline">¶</a></h3>
 <p>There are many ways to turn a master CPT into a custom CPT that works for your
 particular data range.  The tools <a class="reference internal" href="../makecpt.html"><span class="doc">makecpt</span></a> and <a class="reference internal" href="../grd2cpt.html"><span class="doc">grd2cpt</span></a> allow
 several types of transformations to take place:</p>
@@ -1544,19 +1587,22 @@ your actual data range or a sub-range thereof.</li>
 <p>The order of these transformations is important.  For instance, if <strong>-Iz</strong> is given
 then all other <em>z</em>-values need to be referred to the new sign convention. For most
 applications only the last transformation is needed.</p>
-<div class="figure align-center" id="id34">
+<div class="figure align-center" id="id35">
 <a class="reference internal image-reference" href="../_images/GMT_CPTscale.png"><img alt="../_images/GMT_CPTscale.png" src="../_images/GMT_CPTscale.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Examples of two user CPTs for the range -0.5 to 3 created from the same master.  One (left) extracted a
 subset of the master before scaling while the other (right) used the entire range.</span></p>
 </div>
 </div>
 <div class="section" id="automatic-cpts">
-<h3>3.19.6. Automatic CPTs<a class="headerlink" href="#automatic-cpts" title="Permalink to this headline">¶</a></h3>
+<h3>3.19.7. Automatic CPTs<a class="headerlink" href="#automatic-cpts" title="Permalink to this headline">¶</a></h3>
 <p>A few modules (<a class="reference internal" href="../grdimage.html"><span class="doc">grdimage</span></a>, <a class="reference internal" href="../grdview.html"><span class="doc">grdview</span></a>) that expects a CPT option will
 provide a default CPT if none is provided.  By default, the default CPT is the
 “turbo” color table, but this is overridden if the user uses the &#64;eart_relief
 (we select “geo”) or &#64;srtm_relief (we select “srtm”) data sets.  After selection,
-these CPTs are read and scaled to match the range of the grid values.</p>
+these CPTs are read and scaled to match the range of the grid values. You may append
+<strong>+i</strong><em>dz</em> to the CPT to have the exact range rounded to nearest multiple of <em>dz</em>.
+THis is helpful if you plan to place a colorbar and prefer start and stop <em>z</em>-values
+that are multiples of <em>dz</em>.</p>
 </div>
 </div>
 <div class="section" id="the-drawing-of-vectors">
@@ -1581,7 +1627,7 @@ radius, and the beginning and end angles.</li>
 a beginning point and the azimuth and length (in km) of the vector,
 or by its beginning and end point.</li>
 </ol>
-<div class="figure align-center" id="id35">
+<div class="figure align-center" id="id36">
 <a class="reference internal image-reference" href="../_images/GMT_arrows.png"><img alt="../_images/GMT_arrows.png" src="../_images/GMT_arrows.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Examples of Cartesian (left), circular (middle), and geo-vectors (right)
 for different attribute specifications. Note that both full and half
@@ -1594,7 +1640,7 @@ the left or right half, if the vector attributes should shrink for
 vectors whose length are less than a given cutoff length, and the size
 and shape of the head. These attributes are detailed further in the
 relevant manual pages.</p>
-<div class="figure align-center" id="id36">
+<div class="figure align-center" id="id37">
 <a class="reference internal image-reference" href="../_images/GMT_arrows_types.png"><img alt="../_images/GMT_arrows_types.png" src="../_images/GMT_arrows_types.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Examples of different vector heads and attributes.  The default is the standard
 triangular arrow head, which can be modified by adjusting the apex angle [30] or
@@ -1664,7 +1710,7 @@ sequence for font switching.</p>
 </table>
 <p>Shorthand notation for a few special European characters has also been added (for others
 you must use the full octal code):</p>
-<table border="1" class="docutils">
+<table border="1" class="docutils" id="tbl-shorthand">
 <colgroup>
 <col width="23%" />
 <col width="27%" />
@@ -1766,7 +1812,7 @@ system used by GMT to specify such locations in relation to the underlying map, 
 the background panel attribute settings.</p>
 <div class="section" id="reference-and-anchor-point-specification">
 <h3>3.22.1. Reference and anchor point specification<a class="headerlink" href="#reference-and-anchor-point-specification" title="Permalink to this headline">¶</a></h3>
-<div class="figure align-center" id="id37">
+<div class="figure align-center" id="id38">
 <a class="reference internal image-reference" href="../_images/GMT_anchor.png"><img alt="../_images/GMT_anchor.png" src="../_images/GMT_anchor.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">The placement of a map feature (here represented by a green rectangle) in relation
 to the underlying map.  The nine named <em>reference</em> points (blue circles) on the map perimeter (and center)
@@ -1867,7 +1913,7 @@ You may append [<em>dx</em>/<em>dy</em>/][<em>shade</em>] to change the shade co
 shade [Default is 4p/-4p/gray50].  If happy with the placement but desiring a dark blue
 shadow, add <strong>+s</strong>darkblue.</li>
 </ol>
-<div class="figure align-center" id="id38">
+<div class="figure align-center" id="id39">
 <a class="reference internal image-reference" href="../_images/GMT_panel.png"><img alt="../_images/GMT_panel.png" src="../_images/GMT_panel.png" style="width: 400px;" /></a>
 <p class="caption"><span class="caption-text">A map panel is a rectangular background placed behind any of the map features.  It has
 several attributes that can be changed with panel option modifiers.  The light green rounded
@@ -1909,7 +1955,7 @@ this by selecting another alignment by appending them to the <strong>+a</strong>
 with <strong>+w</strong> to all distance annotations along the bar, while for the plain scale it will replace
 the default scale label with the unit abbreviation.</li>
 </ol>
-<div class="figure align-center" id="id39">
+<div class="figure align-center" id="id40">
 <a class="reference internal image-reference" href="../_images/GMT_mapscale.png"><img alt="../_images/GMT_mapscale.png" src="../_images/GMT_mapscale.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Example of two map scales for a Mercator projection evaluated at 53 degrees north.
 The left-most scale was placed with <strong>-Lj</strong><em>ML</em><strong>+c</strong>53<strong>+w</strong>1000k<strong>+f+l</strong>”Scale at 53\232N”
@@ -1947,7 +1993,7 @@ of the cardinal points from being labeled by giving no label in the correspondin
 would write Down and Up at the south and north cardinal point, respectively.  Note that for the plain
 directional rose only the north annotation will be placed.</li>
 </ol>
-<div class="figure align-center" id="id40">
+<div class="figure align-center" id="id41">
 <a class="reference internal image-reference" href="../_images/GMT_dir_rose.png"><img alt="../_images/GMT_dir_rose.png" src="../_images/GMT_dir_rose.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Plain and fancy directional map roses. (left) Bare-bones plain rose showing arrow towards north
 and a cross indicating the cardinal directions, specified by <strong>-Tdg</strong>0/0<strong>+w</strong>1i. (middle) Fancy rose
@@ -1995,7 +2041,7 @@ the declination-adjusted ring and the second (secondary) set refers to the direc
 If only three intervals are given then we assume you want the same intervals for both rings.  As an example,
 to annotate every 90 degrees and tick every 15 and 5 degrees, add <strong>+t</strong>90/15/5.</li>
 </ol>
-<div class="figure align-center" id="id41">
+<div class="figure align-center" id="id42">
 <a class="reference internal image-reference" href="../_images/GMT_mag_rose.png"><img alt="../_images/GMT_mag_rose.png" src="../_images/GMT_mag_rose.png" style="width: 600px;" /></a>
 <p class="caption"><span class="caption-text">Magnetic direction map rose. This symbol is quite complicated and has many items whose attributes are
 in part controlled by GMT defaults parameters and in part by the above modifiers.  The color-coded legend
@@ -2029,7 +2075,7 @@ only [Default is both].  Optionally, append triangle height [Default is half the
 <li>Add missing data key.  Append <strong>+n</strong> to draw a rectangle with the current NaN color and label it NaN.
 Optionally, append a replacement <em>text</em>.  One example might be <strong>+n</strong>”No data”.</li>
 </ol>
-<div class="figure align-center" id="id42">
+<div class="figure align-center" id="id43">
 <a class="reference internal image-reference" href="../_images/GMT_colorbar.png"><img alt="../_images/GMT_colorbar.png" src="../_images/GMT_colorbar.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Color bar placed beneath a map (here truncated).  We extended the bar to show background and foreground
 colors, and used the frame-annotation machinery to add labels.  The bar was placed with
@@ -2056,7 +2102,7 @@ these lines are controlled by the chosen line-spacing factor times the current p
 font setting, i.e., <a class="reference internal" href="../gmt.conf.html#font-annot-primary"><span class="std std-ref">FONT_ANNOT_PRIMARY</span></a>.  The default line spacing factor
 is 1.1; change this with <strong>+l</strong><em>linefactor</em>.</li>
 </ol>
-<div class="figure align-center" id="id43">
+<div class="figure align-center" id="id44">
 <a class="reference internal image-reference" href="../_images/GMT_legend.png"><img alt="../_images/GMT_legend.png" src="../_images/GMT_legend.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Example of a map legend placed with <a class="reference internal" href="../legend.html"><span class="doc">legend</span></a>.  Apart from the placement and dimensions discussed
 here, <a class="reference internal" href="../legend.html"><span class="doc">legend</span></a> reads macro commands that specifies each item of the legend, including colors,
@@ -2085,7 +2131,7 @@ to indicate that you want the source image to be replicated that many times in t
 directions, resulting in a tiling of the map using the selected image.  This may be useful
 in conjunction with an active clip path set by <a class="reference internal" href="../clip.html"><span class="doc">clip</span></a>.</li>
 </ol>
-<div class="figure align-center" id="id44">
+<div class="figure align-center" id="id45">
 <a class="reference internal image-reference" href="../_images/GMT_images.png"><img alt="../_images/GMT_images.png" src="../_images/GMT_images.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Placement of EPS and raster images. (left) The US National Science Foundation (NSF) has
 generously funded the development of GMT and their JPG logo is reproduced here via
@@ -2104,7 +2150,7 @@ In addition, we require one modifier to set the logo’s size.</p>
 The height is automatically set (it is half the width).  To place a 5 cm wide
 GMT logo, append <strong>+w</strong>5c.</li>
 </ol>
-<div class="figure align-center" id="id45">
+<div class="figure align-center" id="id46">
 <a class="reference internal image-reference" href="../_images/GMT_coverlogo.png"><img alt="../_images/GMT_coverlogo.png" src="../_images/GMT_coverlogo.png" style="width: 300px;" /></a>
 <p class="caption"><span class="caption-text">Placement of the GMT logo. The logo itself only has a size modifier but the <a class="reference internal" href="../gmtlogo.html"><span class="doc">gmtlogo</span></a>
 module allows additional attributes such as a background map panel.</span></p>
@@ -2144,7 +2190,7 @@ in a file that your script can ingest and act upon.  The file contains a single 
 four tab-separated values <em>x0 y0 width height</em> in the current plot units [cm], where <em>x0 y0</em> refers
 to the lower-left point on the inset.  See the figure caption for an example.</li>
 </ol>
-<div class="figure align-center" id="id46">
+<div class="figure align-center" id="id47">
 <a class="reference internal image-reference" href="../_images/GMT_inset.png"><img alt="../_images/GMT_inset.png" src="../_images/GMT_inset.png" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">Demonstration of how a map inset may be used to place a global overview map as an inset in a
 regional map.  Main map shows the regional area of Australia.  We place an inset in the upper
@@ -2172,7 +2218,7 @@ label to the left and reverses the teeth direction as well.</li>
 <li>Add a unit to the vertical scale bar label.  This is an optional modifier and is set via <strong>+u</strong><em>unit</em>.
 To append nT (nTesla) to the label you would specify <strong>+u</strong>nT.</li>
 </ol>
-<div class="figure align-center" id="id47">
+<div class="figure align-center" id="id48">
 <a class="reference internal image-reference" href="../_images/GMT_vertscale.png"><img alt="../_images/GMT_vertscale.png" src="../_images/GMT_vertscale.png" style="width: 600px;" /></a>
 <p class="caption"><span class="caption-text">Placement of a vertical scale bar. As for other embellishments the <a class="reference internal" href="../wiggle.html"><span class="doc">wiggle</span></a>
 module allows additional attributes such as a background map panel.</span></p>
@@ -2921,7 +2967,7 @@ off; see <a class="reference internal" href="../gmt.conf.html#ps-comments"><span
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

@@ -216,7 +216,7 @@
 <h2>Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
 <p><strong>gmt pscoupe</strong> [ <em>files</em> ] <a class="reference internal" href="#j"><span> <strong>-J</strong></span></a></strong><em>parameters</em>
 <a class="reference internal" href="#r"><span> <strong>-R</strong></span></a></strong><em>region</em> <a class="reference internal" href="#a"><span> <strong>-A</strong></span></a></strong><em>parameters</em>
-<a class="reference internal" href="#s"><span> <strong>-S</strong></span></a></strong><em>&lt;format&gt;&lt;scale&gt;</em>[<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]
+<a class="reference internal" href="#s"><span> <strong>-S</strong></span></a></strong><em>&lt;format&gt;&lt;scale&gt;</em>[<strong>+a</strong><em>angle</em>][<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]
 [ <a class="reference internal" href="#b"><span> <strong>-B</strong></span></a></strong>[<strong>p</strong>|<strong>s</strong>]<em>parameters</em> ]
 [ <a class="reference internal" href="#e"><span> <strong>-E</strong></span></a></strong><em>fill</em> ]
 [ <a class="reference internal" href="#f"><span> <strong>-F</strong></span></a></strong><em>mode</em>[<em>args</em>] ]
@@ -338,14 +338,16 @@ is made. The other parameters are the same as for <strong>-Aa</strong> option.</
 </dd>
 </dl>
 <dl class="docutils" id="s">
-<dt><strong>-S</strong><em>&lt;format&gt;&lt;scale&gt;</em>[<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]</dt>
+<dt><strong>-S</strong><em>&lt;format&gt;&lt;scale&gt;</em>[<strong>+a</strong><em>angle</em>][<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]</dt>
 <dd><p class="first">Selects the meaning of the columns in the data file.
 <em>scale</em> adjusts the scaling of the radius of the “beach ball”, which will be proportional to
 the magnitude. <em>scale</em> is the size for magnitude = 5 (i.e. scalar seismic moment M0 = 4.0E23 dynes-cm).
 The color or shade of the compressive quadrants can
 be specified with the <strong>-G</strong> option. The color or shade of the extensive
-quadrants can be specified with the <strong>-E</strong> option. Append <strong>+f</strong><em>font</em>
-to change the font of the text string; append <strong>+j</strong><em>justify</em> to change
+quadrants can be specified with the <strong>-E</strong> option.
+For each beachball, a text string can be specified to appear near the beachball [optional].
+Append <strong>+a</strong><em>angle</em> to change the angle of the text string;
+append <strong>+f</strong><em>font</em> to change its font (size,fontname,color); append <strong>+j</strong><em>justify</em> to change
 the text location relative to the beachball (default is above the beachball);
 append <strong>+o</strong> to offset the text string by <em>dx/dy</em>.</p>
 <p class="last">In order to use the same file to plot cross-sections, depth is in third column.
@@ -369,7 +371,7 @@ Using 0,0 in columns 8 and 9 will plot the beach ball at the longitude,
 latitude given in columns 1 and 2. The <strong>-:</strong> option will interchange the order of
 columns (1,2) and (8,9).</p>
 <p class="last"><strong>10</strong>:
-Text string to appear above or below the beach ball (optional).</p>
+Text string to appear near the beach ball (optional).</p>
 </dd>
 <dt><strong>-Sc</strong><em>scale</em>[<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]</dt>
 <dd><p class="first">Focal mechanisms in Global CMT convention.
@@ -390,7 +392,7 @@ Using 0,0 in columns 8 and 9 will plot the beach ball at the longitude,
 latitude given in columns 1 and 2. The <strong>-:</strong> option will interchange the order of
 columns (1,2) and (12,13).</p>
 <p class="last"><strong>14</strong>:
-Text string to appear above or below the beach ball (optional).</p>
+Text string to appear near the beach ball (optional).</p>
 </dd>
 <dt><strong>-Sm|d|z</strong><em>scale</em>[<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]</dt>
 <dd><p class="first">Seismic moment tensor.
@@ -414,7 +416,7 @@ Using 0,0 in columns 8 and 9 will plot the beach ball at the longitude,
 latitude given in columns 1 and 2. The <strong>-:</strong> option will interchange the order of
 columns (1,2) and (11,12).</p>
 <p class="last"><strong>13</strong>:
-Text string to appear above or below the beach ball (optional).</p>
+Text string to appear near the beach ball (optional).</p>
 </dd>
 <dt><strong>-Sp</strong><em>scale</em>[<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]</dt>
 <dd><p class="first">Focal mechanisms given with partial data on both planes.
@@ -437,7 +439,7 @@ Using 0,0 in columns 8 and 9 will plot the beach ball at the longitude,
 latitude given in columns 1 and 2. The <strong>-:</strong> option will interchange the order of
 columns (1,2) and (9,10).</p>
 <p class="last"><strong>11</strong>:
-Text string to appear above or below the beach ball (optional).</p>
+Text string to appear near the beach ball (optional).</p>
 </dd>
 <dt><strong>-Sx|y|t</strong><em>scale</em>[<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]</dt>
 <dd><p class="first">Principal axis.
@@ -459,7 +461,7 @@ Using 0,0 in columns 8 and 9 will plot the beach ball at the longitude,
 latitude given in columns 1 and 2. The <strong>-:</strong> option will interchange the order of
 columns (1,2) and (14,15).</p>
 <p class="last"><strong>16</strong>:
-Text string to appear above or below the beach ball (optional).</p>
+Text string to appear near the beach ball (optional).</p>
 </dd>
 </dl>
 </div>
@@ -681,7 +683,7 @@ Institut de Physique du Globe de Paris, Departement de Sismologie, Paris, France
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

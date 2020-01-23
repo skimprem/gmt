@@ -222,16 +222,15 @@ will continue to debate for some time.</p>
 <span class="c1">#               GMT EXAMPLE 34</span>
 <span class="c1">#</span>
 <span class="c1"># Purpose:      Illustrate coast with DCW country polygons</span>
-<span class="c1"># GMT modules:  set, coast, makecpt, grdimage</span>
+<span class="c1"># GMT modules:  set, coast, makecpt, grdimage, subplot</span>
 <span class="c1">#</span>
 gmt begin ex34
 	gmt <span class="nb">set</span> FORMAT_GEO_MAP dddF FONT_HEADING 24p
 	gmt makecpt -Cglobe -T-5000/5000
 	gmt subplot begin 2x1 -Fs4.5i/0 -M0.05i -JM4.5i -R-6/20/35/52 -SRl -SCb -Bwesn -T<span class="s2">&quot;Franco-Italian Union, 2042-45&quot;</span>
 		gmt coast -EFR,IT+gP300/8 -Glightgray -c1,0
-		<span class="c1"># Extract a subset of ETOPO2m for this part of Europe</span>
-		<span class="c1"># gmt grdcut etopo2m_grd.nc -R -GFR+IT.nc=ns</span>
-		gmt grdimage @FR+IT.nc -I+a15+ne0.75 -c0,0
+		<span class="c1"># Plot a subset of earth_relief_02m for this part of Europe</span>
+		gmt grdimage @earth_relief_02m -I+a15+ne0.75 -c0,0
 		gmt coast -EFR,IT+gred@60
 	gmt subplot end
 gmt end show
@@ -266,7 +265,7 @@ gmt end show
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

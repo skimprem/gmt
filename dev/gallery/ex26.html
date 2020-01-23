@@ -235,13 +235,13 @@ GMT mapping programs.</p>
 gmt begin ex26
 	<span class="c1"># first do an overhead of the east coast from 160 km altitude point straight down</span>
 	<span class="nv">latitude</span><span class="o">=</span><span class="m">41</span>.5
-	<span class="nv">longitude</span><span class="o">=</span>-74.0
-	<span class="nv">altitude</span><span class="o">=</span><span class="m">160</span>.0
+	<span class="nv">longitude</span><span class="o">=</span>-74
+	<span class="nv">altitude</span><span class="o">=</span><span class="m">160</span>
 	<span class="nv">tilt</span><span class="o">=</span><span class="m">0</span>
 	<span class="nv">azimuth</span><span class="o">=</span><span class="m">0</span>
 	<span class="nv">twist</span><span class="o">=</span><span class="m">0</span>
-	<span class="nv">Width</span><span class="o">=</span><span class="m">0</span>.0
-	<span class="nv">Height</span><span class="o">=</span><span class="m">0</span>.0
+	<span class="nv">Width</span><span class="o">=</span><span class="m">0</span>
+	<span class="nv">Height</span><span class="o">=</span><span class="m">0</span>
 
 	<span class="nv">PROJ</span><span class="o">=</span>-JG<span class="si">${</span><span class="nv">longitude</span><span class="si">}</span>/<span class="si">${</span><span class="nv">latitude</span><span class="si">}</span>/<span class="si">${</span><span class="nv">altitude</span><span class="si">}</span>/<span class="si">${</span><span class="nv">azimuth</span><span class="si">}</span>/<span class="si">${</span><span class="nv">tilt</span><span class="si">}</span>/<span class="si">${</span><span class="nv">twist</span><span class="si">}</span>/<span class="si">${</span><span class="nv">Width</span><span class="si">}</span>/<span class="si">${</span><span class="nv">Height</span><span class="si">}</span>/4i
 	gmt coast -Rg <span class="nv">$PROJ</span> -X1i -B5g5 -Glightbrown -Slightblue -W -Dl -N1/1p,red -N2/0.5p -Y5i
@@ -251,8 +251,8 @@ gmt begin ex26
 	<span class="nv">tilt</span><span class="o">=</span><span class="m">55</span>
 	<span class="nv">azimuth</span><span class="o">=</span><span class="m">210</span>
 	<span class="nv">twist</span><span class="o">=</span><span class="m">45</span>
-	<span class="nv">Width</span><span class="o">=</span><span class="m">30</span>.0
-	<span class="nv">Height</span><span class="o">=</span><span class="m">30</span>.0
+	<span class="nv">Width</span><span class="o">=</span><span class="m">30</span>
+	<span class="nv">Height</span><span class="o">=</span><span class="m">30</span>
 
 	<span class="nv">PROJ</span><span class="o">=</span>-JG<span class="si">${</span><span class="nv">longitude</span><span class="si">}</span>/<span class="si">${</span><span class="nv">latitude</span><span class="si">}</span>/<span class="si">${</span><span class="nv">altitude</span><span class="si">}</span>/<span class="si">${</span><span class="nv">azimuth</span><span class="si">}</span>/<span class="si">${</span><span class="nv">tilt</span><span class="si">}</span>/<span class="si">${</span><span class="nv">twist</span><span class="si">}</span>/<span class="si">${</span><span class="nv">Width</span><span class="si">}</span>/<span class="si">${</span><span class="nv">Height</span><span class="si">}</span>/5i
 	gmt coast <span class="nv">$PROJ</span> -B5g5 -Glightbrown -Slightblue -W -Ia/blue -Di -Na -X1i -Y-4i
@@ -288,7 +288,7 @@ gmt end show
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

@@ -440,7 +440,7 @@ case P) followed by the desired exponent, in our case 0.5. Since
 to the linear transformation. Thus our command becomes (Figure <a class="reference internal" href="#gmt-pow"><span class="std std-ref">Power
 transformation</span></a>)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt begin GMT_pow
-	gmt plot -R0/100/0/10 -Jx0.3ip0.5/0.15i -Bxa1p -Bya2f1 -BWSne+givory -Wthick sqrt.txt 
+	gmt plot -R0/100/0/10 -Jx0.3ip0.5/0.15i -Bxa1p -Bya2f1 -BWSne+givory -Wthick sqrt.txt
 	gmt plot -Sc0.075i -Ggreen -W sqrt10.txt
 gmt end show
 </pre></div>
@@ -489,7 +489,7 @@ polar coordinates <span class="math notranslate nohighlight">\(z(\theta, r) = r^
 operates on or creates grid files.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt begin GMT_polar
 	gmt grdmath -R0/360/2/4 -I6/0.1 X <span class="m">4</span> MUL PI MUL <span class="m">180</span> DIV COS Y <span class="m">2</span> POW <span class="nv">MUL</span> <span class="o">=</span> tt.nc
-	gmt grdcontour tt.nc -JP3i -B30 -BNs+ghoneydew -C2 -S4 --FORMAT_GEO_MAP<span class="o">=</span>+ddd 
+	gmt grdcontour tt.nc -JP3i -B30 -BNs+ghoneydew -C2 -S4 --FORMAT_GEO_MAP<span class="o">=</span>+ddd
 gmt end show
 </pre></div>
 </div>
@@ -523,7 +523,7 @@ Figure <a class="reference internal" href="#gmt-polar"><span class="std std-ref"
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

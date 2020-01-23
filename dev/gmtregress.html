@@ -402,8 +402,9 @@ specify more decimals using the <a class="reference internal" href="gmt.conf.htm
 <div class="section" id="generate-1d-array">
 <h2>Generate 1D Array<a class="headerlink" href="#generate-1d-array" title="Permalink to this headline">¶</a></h2>
 <p>Make an evenly spaced coordinate array from <em>min</em> to <em>max</em> in steps of <em>inc</em>.
-Append <strong>+b</strong> if we should take log2 of <em>min</em> and <em>max</em> and build an equidistant
-log2-array using <em>inc</em> integer increments in log2.
+Append <strong>+b</strong> if we should take log2 of <em>min</em> and <em>max</em>, get their nearest integers, build an equidistant
+log2-array using <em>inc</em> integer increments in log2, then undo the log2 conversion
+(e.g., 3/20/1+b will yield 4,8,16).
 Append <strong>+l</strong> if we should take log10 of <em>min</em> and <em>max</em> and build an
 array where <em>inc</em> can be 1 (every magnitude), 2, (1, 2, 5 times magnitude) or 3
 (1-9 times magnitude).  For less than every magnitude, use a negative integer <em>inc</em>.
@@ -522,7 +523,7 @@ equations for the slope, intercept, and standard errors of the best straight lin
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

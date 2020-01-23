@@ -269,7 +269,7 @@ to return the lowermost or uppermost of the modal values.</p>
 <p>(<strong>l</strong>) Lower: Return the minimum of all values.</p>
 <p>(<strong>L</strong>) Lower: Return minimum of all positive values only.</p>
 <p>(<strong>u</strong>) Upper: Return maximum of all values.</p>
-<p>(<strong>U</strong>) Upper: Return maximum or all negative values only.</p>
+<p>(<strong>U</strong>) Upper: Return maximum of all negative values only.</p>
 <p>Upper case type <strong>B</strong>, <strong>C</strong>, <strong>G</strong>, <strong>M</strong>, <strong>P</strong>, <strong>F</strong> will use
 robust filter versions: i.e., replace outliers (2.5 L1 scale off
 median, using 1.4826 * median absolute deviation [MAD]) with median during filtering.</p>
@@ -417,8 +417,9 @@ specify more decimals using the <a class="reference internal" href="gmt.conf.htm
 <div class="section" id="generate-1d-array">
 <h2>Generate 1D Array<a class="headerlink" href="#generate-1d-array" title="Permalink to this headline">¶</a></h2>
 <p>Make an evenly spaced coordinate array from <em>min</em> to <em>max</em> in steps of <em>inc</em>.
-Append <strong>+b</strong> if we should take log2 of <em>min</em> and <em>max</em> and build an equidistant
-log2-array using <em>inc</em> integer increments in log2.
+Append <strong>+b</strong> if we should take log2 of <em>min</em> and <em>max</em>, get their nearest integers, build an equidistant
+log2-array using <em>inc</em> integer increments in log2, then undo the log2 conversion
+(e.g., 3/20/1+b will yield 4,8,16).
 Append <strong>+l</strong> if we should take log10 of <em>min</em> and <em>max</em> and build an
 array where <em>inc</em> can be 1 (every magnitude), 2, (1, 2, 5 times magnitude) or 3
 (1-9 times magnitude).  For less than every magnitude, use a negative integer <em>inc</em>.
@@ -503,7 +504,7 @@ and not shorten the track, and add the distances to the file, use</p>
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

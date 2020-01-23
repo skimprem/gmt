@@ -236,7 +236,7 @@ have changed places.</p>
 gmt begin ex19
 	gmt grdmath -Rd -I1 -r Y COSD <span class="m">2</span> <span class="nv">POW</span> <span class="o">=</span> lat.nc
 	gmt grdmath <span class="nv">X</span> <span class="o">=</span> lon.nc
-	gmt makecpt -Cwhite,blue -T0,1 -Z -N -H &gt; lat.cpt
+	gmt makecpt -Cwhite,blue -T0/1 -N -H &gt; lat.cpt
 	gmt makecpt -Crainbow -T-180/180 -H &gt; lon.cpt
 	gmt subplot begin 3x1 -Fs6.5i/0 -M0 -Bbltr -Rd -JI0/6.5i
 		<span class="c1">#   First make a worldmap with graded blue oceans and rainbow continents</span>
@@ -245,9 +245,9 @@ gmt begin ex19
 		gmt grdimage lon.nc -Clon.cpt -nl
 		gmt coast -Q
 		gmt coast -Dc -A5000 -Wthinnest
-		<span class="nb">echo</span> <span class="s2">&quot;0 20 15TH INTERNATIONAL&quot;</span> <span class="p">|</span> gmt text -F+f32p,Helvetica-Bold,red<span class="o">=</span>thinner
+		<span class="nb">echo</span> <span class="s2">&quot;0 20 16TH INTERNATIONAL&quot;</span> <span class="p">|</span> gmt text -F+f32p,Helvetica-Bold,red<span class="o">=</span>thinner
 		<span class="nb">echo</span> <span class="s2">&quot;0 -10 GMT CONFERENCE&quot;</span> <span class="p">|</span> gmt text -F+f32p,Helvetica-Bold,red<span class="o">=</span>thinner
-		<span class="nb">echo</span> <span class="s2">&quot;0 -30 Honolulu, Hawaii, April 1, 2018&quot;</span> <span class="p">|</span> gmt text -F+f18p,Helvetica-Bold,green<span class="o">=</span>thinnest
+		<span class="nb">echo</span> <span class="s2">&quot;0 -30 Honolulu, Hawaii, April 1, 2020&quot;</span> <span class="p">|</span> gmt text -F+f18p,Helvetica-Bold,green<span class="o">=</span>thinnest
 		<span class="c1">#   Then show example of color patterns and placing a PostScript image</span>
 		gmt coast -Dc -A5000 -Gp86+fred+byellow+r100 -Sp@circuit.png+r100 -c1,0
 		<span class="nb">echo</span> <span class="s2">&quot;0 30 SILLY USES OF&quot;</span> <span class="p">|</span> gmt text -F+f32p,Helvetica-Bold,lightgreen<span class="o">=</span>thinner
@@ -259,9 +259,9 @@ gmt begin ex19
 		gmt grdimage lat.nc -Clat.cpt -nl
 		gmt coast -Q
 		gmt coast -Dc -A5000 -Wthinnest
-		<span class="nb">echo</span> <span class="s2">&quot;0 20 15TH INTERNATIONAL&quot;</span> <span class="p">|</span> gmt text -F+f32p,Helvetica-Bold,red<span class="o">=</span>thinner
+		<span class="nb">echo</span> <span class="s2">&quot;0 20 16TH INTERNATIONAL&quot;</span> <span class="p">|</span> gmt text -F+f32p,Helvetica-Bold,red<span class="o">=</span>thinner
 		<span class="nb">echo</span> <span class="s2">&quot;0 -10 GMT CONFERENCE&quot;</span> <span class="p">|</span> gmt text -F+f32p,Helvetica-Bold,red<span class="o">=</span>thinner
-		<span class="nb">echo</span> <span class="s2">&quot;0 -30 Honolulu, Hawaii, April 1, 2018&quot;</span> <span class="p">|</span> gmt text -F+f18p,Helvetica-Bold,green<span class="o">=</span>thinnest
+		<span class="nb">echo</span> <span class="s2">&quot;0 -30 Honolulu, Hawaii, April 1, 2020&quot;</span> <span class="p">|</span> gmt text -F+f18p,Helvetica-Bold,green<span class="o">=</span>thinnest
 	gmt subplot end
 gmt end show
 rm -f lat.nc lon.nc lat.cpt lon.cpt
@@ -296,7 +296,7 @@ rm -f lat.nc lon.nc lat.cpt lon.cpt
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

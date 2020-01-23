@@ -318,11 +318,11 @@ add the -H option for modern mode to allow output to stdout.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt begin GMT_tut_14
 	gmt makecpt -H -Crainbow -T-20/60/10 &gt; disc.cpt
 	gmt makecpt -H -Crainbow -T-20/60 &gt; cont.cpt
-	gmt basemap -R0/6/0/9 -Jx1i -B0 -Xc 
-	gmt colorbar -Dx1i/1i+w4i/0.5i+h -Cdisc.cpt -Ba -B+tdiscrete 
-	gmt colorbar -Dx1i/3i+w4i/0.5i+h -Ccont.cpt -Ba -B+tcontinuous 
-	gmt colorbar -Dx1i/5i+w4i/0.5i+h -Cdisc.cpt -Ba -B+tdiscrete -I0.5 
-	gmt colorbar -Dx1i/7i+w4i/0.5i+h -Ccont.cpt -Ba -B+tcontinuous -I0.5 
+	gmt basemap -R0/6/0/9 -Jx1i -B0 -Xc
+	gmt colorbar -Dx1i/1i+w4i/0.5i+h -Cdisc.cpt -Ba -B+tdiscrete
+	gmt colorbar -Dx1i/3i+w4i/0.5i+h -Ccont.cpt -Ba -B+tcontinuous
+	gmt colorbar -Dx1i/5i+w4i/0.5i+h -Cdisc.cpt -Ba -B+tdiscrete -I0.5
+	gmt colorbar -Dx1i/7i+w4i/0.5i+h -Ccont.cpt -Ba -B+tcontinuous -I0.5
 gmt end show
 </pre></div>
 </div>
@@ -425,7 +425,7 @@ the plot.  We try</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt begin GMT_tut_15
 	gmt makecpt -Crainbow -T1000/5000
 	gmt grdimage @tut_relief.nc -JM6i -B -BWSnE
-	gmt colorbar -DJTC -I0.4 -Bxa -By+lm 
+	gmt colorbar -DJTC -I0.4 -Bxa -By+lm
 gmt end show
 </pre></div>
 </div>
@@ -498,7 +498,7 @@ create the shaded relief image:</p>
 	gmt makecpt -Crainbow -T1000/5000
 	gmt grdgradient @tut_relief.nc -Ne0.8 -A100 -fg -Gus_i.nc
 	gmt grdimage tut_relief.nc -Ius_i.nc -JM6i -B -BWSnE
-	gmt colorbar -DJTC -I0.4 -Bxa -By+lm 
+	gmt colorbar -DJTC -I0.4 -Bxa -By+lm
 gmt end show
 </pre></div>
 </div>
@@ -639,7 +639,7 @@ gmt end show
 <p>We will make a perspective, color-coded view of the US Rockies
 from the southeast.  This is done using</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt begin GMT_tut_19
-	gmt makecpt -Ctopo -T1000/5000
+	gmt makecpt -Cdem2 -T1000/5000
 	gmt grdgradient @tut_relief.nc -Ne0.8 -A100 -fg -Gus_i.nc
 	gmt grdview tut_relief.nc -JM4i -p135/35 -Qi50 -Ius_i.nc -B -JZ0.5i -C
 gmt end show
@@ -687,7 +687,7 @@ appropriate <em>dpi</em> for the final output device and let it rip.</p>
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

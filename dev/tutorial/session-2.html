@@ -551,8 +551,8 @@ Symbols, on the other hand, can be plotted one at the time so there
 is no limit to how many symbols one may plot.  Therefore, to connect
 symbols with a line we must use the overlay approach:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt begin GMT_tut_8
-	gmt plot @tut_data.txt -R0/6/0/6 -Jx1i -B -Wthinner 
-	gmt plot tut_data.txt -W -Si0.2i 
+	gmt plot @tut_data.txt -R0/6/0/6 -Jx1i -B -Wthinner
+	gmt plot tut_data.txt -W -Si0.2i
 gmt end show
 </pre></div>
 </div>
@@ -618,7 +618,7 @@ This color table was generated as part of the script (below).</p>
 <p>We may now complete our example using the Mercator projection:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt begin GMT_tut_9
 	gmt makecpt -Cred,green,blue -T0,100,300,10000
-	gmt coast -R130/150/35/50 -JM6i -B -Ggray 
+	gmt coast -R130/150/35/50 -JM6i -B -Ggray
 	gmt plot @tut_quakes.ngdc -Wfaint -i4,3,5,6+s0.1 -h3 -Scc -C -Vl
 gmt end show
 </pre></div>
@@ -853,7 +853,7 @@ Your plot should look like <a class="reference internal" href="#gmt-tut-10"><spa
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

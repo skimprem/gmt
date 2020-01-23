@@ -263,7 +263,7 @@ directory.</dd>
 <div class="section" id="optional-arguments">
 <h2>Optional Arguments<a class="headerlink" href="#optional-arguments" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils" id="a">
-<dt><strong>-A</strong>[<strong>+g</strong><em>paint</em>][<strong>+m</strong><em>margins</em>][<strong>+n</strong>][<strong>+p</strong>[<em>pen</em>]][<strong>+r</strong>][<strong>+s</strong>[<strong>m</strong>]|<strong>S</strong><em>width</em>[<strong>u</strong>]/<em>height</em>[<strong>u</strong>]][<strong>+u</strong>]</dt>
+<dt><strong>-A</strong>[<strong>+f</strong><em>fade</em>][<strong>+g</strong><em>paint</em>][<strong>+m</strong><em>margins</em>][<strong>+n</strong>][<strong>+p</strong>[<em>pen</em>]][<strong>+r</strong>][<strong>+s</strong>[<strong>m</strong>]|<strong>S</strong><em>width</em>[<strong>u</strong>]/<em>height</em>[<strong>u</strong>]][<strong>+u</strong>]</dt>
 <dd><p class="first">Adjust the BoundingBox and HiResBoundingBox to the minimum required
 by the image content. Append <strong>+n</strong> to leave the BoundingBoxes as they are
 (e.g., to override any automatic setting of <strong>-A</strong> by <strong>-W</strong>).
@@ -277,12 +277,13 @@ but you can append a new unit and/or impose different width and height. What hap
 here is that Ghostscript will do the re-interpolation work and the final image will
 retain the DPI resolution set by <strong>-E</strong>.  Use <strong>-A+sm</strong> to set a maximum size and
 the new width are only imposed if the original figure width exceeds it. Append
-/<em>new_height</em> to also also impose a maximum height in addition to the width.
+/<em>new_height</em> to also impose a maximum height in addition to the width.
 Alternatively use <strong>-A+S</strong><em>scale</em> to scale the image by a constant factor.</p>
-<p class="last">Use the <strong>-A+r</strong> to round the HighRes BoundingBox instead of using the <cite>ceil</cite> function.
+<p class="last">Use the <strong>-A+r</strong> to round the HighRes BoundingBox instead of using the <code class="docutils literal notranslate"><span class="pre">ceil</span></code> function.
 This is going against Adobe Law but can be useful when creating very small images
 where the difference of one pixel might matter.
 If <strong>-V</strong> is used we also report the dimensions of the illustration.
+Use <strong>-A+f</strong><em>fade</em> to fade the entire plot towards black (100%) [no fading, 0].
 Use <strong>-A+g</strong><em>paint</em> to paint the BoundingBox behind the illustration and
 use <strong>-A+p</strong>[<em>pen</em>] to draw the BoundingBox outline (append a pen or accept
 the default pen of 0.25p,black).</p>
@@ -451,7 +452,7 @@ files, or even non-GMT ps files, can provide the information
 <strong>psconvert</strong> requires by manually editing a line into the
 PostScript file, prefixed with %%PROJ.</p>
 <p>For example the command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JM0/12c -R-10/-4/37/43 -W1 -Di -Bg30m --MAP_FRAME_TYPE<span class="o">=</span>inside &gt; cara.ps
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JM0/12c -R-10/-4/37/43 -W1 -Di -Bg30m --MAP_FRAME_TYPE<span class="o">=</span>inside -ps cara
 </pre></div>
 </div>
 <p>adds this comment line:</p>
@@ -536,60 +537,44 @@ can be cut and pasted into your terminal for testing.
 Other commands requiring input files are just dummy examples of the types
 of uses that are common but cannot be run verbatim as written.</p>
 <p>To convert the file psfile.ps to PNG using a tight BoundingBox:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert psfile.ps -A -Tg
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert psfile.ps -A -Tg
 </pre></div>
 </div>
-</div></blockquote>
 <p>To convert the file map.ps to PDF, extend the BoundingBox by 0.2 cm,
 fill it with lightblue paint and draw outline with a thick pen:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert map.ps -A+m0.2c+glightblue+pthick -Tf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert map.ps -A+m0.2c+glightblue+pthick -Tf
 </pre></div>
 </div>
-</div></blockquote>
-<p>To create a 5 cm PNG version at 300 dpi of our example_01.ps file</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert example_01.ps -A+s5c -Tg
+<p>To create a 5 cm PNG version at 300 dpi of our example_01.ps file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert example_01.ps -A+s5c -Tg
 </pre></div>
 </div>
-</div></blockquote>
-<p>To create a 3 pages PDF file from 3 individual PS files</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert -TF -Fabc a.ps b.ps c.ps
+<p>To create a 3 pages PDF file from 3 individual PS files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt psconvert -TF -Fabc a.ps b.ps c.ps
 </pre></div>
 </div>
-</div></blockquote>
 <p>To create a simple linear map with <a class="reference internal" href="coast.html"><span class="doc">coast</span></a> and convert it to tif with a
-.tfw the tight BoundingBox computation.</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JX12cd -R-10/-4/37/43 -W1 -Di -Bg30m -G200 --MAP_FRAME_TYPE<span class="o">=</span>inside &gt; cara.ps
+.tfw the tight BoundingBox computation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JX12cd -R-10/-4/37/43 -W1 -Di -Bg30m -G200 --MAP_FRAME_TYPE<span class="o">=</span>inside -ps cara
 gmt psconvert cara.ps -Tt -W
 </pre></div>
 </div>
-</div></blockquote>
 <p>To create a Mercator version of the above example and use GDAL to
-produce a true geotiff file.</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JM0/12c -R-10/-4/37/43 -W1 -Di -Bg30m -G200 --MAP_FRAME_TYPE<span class="o">=</span>inside &gt; cara.ps
+produce a true geotiff file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JM0/12c -R-10/-4/37/43 -W1 -Di -Bg30m -G200 --MAP_FRAME_TYPE<span class="o">=</span>inside -ps cara
 gdalwarp -s_srs +proj<span class="o">=</span>merc cara.tif carageo.tiff
 </pre></div>
 </div>
-</div></blockquote>
-<p>To create a Polar Stereographic geotiff file of Patagonia</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JS-55/-60/15c -R-77/-55/-57.5/-48r -Di -Gred -Bg2 --MAP_FRAME_TYPE<span class="o">=</span>inside &gt; patagonia.ps
+<p>To create a Polar Stereographic geotiff file of Patagonia:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt coast -JS-55/-60/15c -R-77/-55/-57.5/-48r -Di -Gred -Bg2 --MAP_FRAME_TYPE<span class="o">=</span>inside -ps patagonia
 gmt psconvert patagonia.ps -Tt -W+g -V
 </pre></div>
 </div>
-</div></blockquote>
-<p>To create a simple KML file for use in Google Earth, try</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt grdimage lonlatgrid.nc -Jx1 -Ccolors.cpt -B0g2 --MAP_FRAME_TYPE<span class="o">=</span>inside &gt; tile.ps
+<p>To create a simple KML file for use in Google Earth, try:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gmt grdimage lonlatgrid.nc -Jx1 -Ccolors.cpt -B0g2 --MAP_FRAME_TYPE<span class="o">=</span>inside -ps tile
 gmt psconvert tile.ps -Tg -W+k+t<span class="s2">&quot;my title&quot;</span>+l256/-1 -V
 </pre></div>
 </div>
-</div></blockquote>
 <p>(These commands assume that Ghostscript can be found in your system’s path.)</p>
 </div>
 <div class="section" id="ghostscript-options">
@@ -646,7 +631,7 @@ use it.</p>
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>

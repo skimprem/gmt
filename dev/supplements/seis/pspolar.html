@@ -226,7 +226,7 @@
 [ <a class="reference internal" href="#k"><span> <strong>-K</strong></span></a></strong> ] [ <a class="reference internal" href="#n"><span> <strong>-N</strong></span></a></strong> ]
 [ <a class="reference internal" href="#o"><span> <strong>-O</strong></span></a></strong> ]
 [ <a class="reference internal" href="#q"><span> <strong>-Q</strong></span></a></strong><em>mode</em>[<em>args</em>] ]
-[ <a class="reference internal" href="#t"><span> <strong>-T</strong></span></a></strong><em>angle</em>/<em>form</em>/<em>justify</em>/<em>fontsize</em> ]
+[ <a class="reference internal" href="#t"><span> <strong>-T</strong></span></a></strong>[<strong>+a</strong><em>angle</em>][<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]] ]
 [ <a class="reference internal" href="#u"><span> <strong>-U</strong></span></a></strong>[<em>stamp</em>] ]
 [ <a class="reference internal" href="#v"><span> <strong>-V</strong></span></a></strong>[<em>level</em>] ]
 [ <a class="reference internal" href="#w"><span> <strong>-W</strong></span></a></strong><em>pen</em> ]
@@ -388,8 +388,14 @@ See <a class="reference internal" href="#vector-attributes">Vector Attributes</a
 </dd>
 </dl>
 <dl class="docutils" id="t">
-<dt><strong>-T</strong><em>angle</em>/<em>form</em>/<em>justify</em>/<em>fontsize</em></dt>
-<dd>To write station code; <em>fontsize</em> must be given in points [Default is 0.0/0/5/12].</dd>
+<dt><strong>-T</strong>[<strong>+a</strong><em>angle</em>][<strong>+f</strong><em>font</em>][<strong>+j</strong><em>justify</em>][<strong>+o</strong><em>dx</em>[/<em>dy</em>]]</dt>
+<dd><p class="first">Write station code near symbols.</p>
+<p class="last">Optionally append <strong>+a</strong><em>angle</em> to change the text angle;
+<strong>+f</strong><em>font</em> to set the font of the text;
+append <strong>+j</strong><em>justify</em> to change the text location relative to the symbol;
+append <strong>+o</strong> to offset the text string by <em>dx</em>/<em>dy</em>.
+[Default to write station code above the symbol; the default font size is 12p]</p>
+</dd>
 </dl>
 <dl class="docutils" id="u">
 <dt><strong>-U</strong>[<em>label</em>][<strong>+c</strong>][<strong>+j</strong><em>just</em>][<strong>+o</strong><em>dx</em>/<em>dy</em>] <a class="reference internal" href="../../gmt.html#u-full"><span class="std std-ref">(more …)</span></a></dt>
@@ -401,7 +407,7 @@ See <a class="reference internal" href="#vector-attributes">Vector Attributes</a
 </dl>
 <dl class="docutils" id="w">
 <dt><strong>-W</strong>[<strong>-</strong>|<strong>+</strong>][<em>pen</em>][<em>attr</em>] <a class="reference internal" href="../../cookbook/features.html#wpen-attrib"><span class="std std-ref">(more …)</span></a></dt>
-<dd>Set current pen attributes [Defaults: width = default, color = black, style = solid].</dd>
+<dd>Set current pen attributes [Default pen is default,black,solid].</dd>
 </dl>
 <p id="x"><strong>-X</strong>[<strong>a</strong>|<strong>c</strong>|<strong>f</strong>|<strong>r</strong>][<em>xshift</em>[<strong>u</strong>]]</p>
 <dl class="docutils">
@@ -609,7 +615,7 @@ Institut de Physique du Globe de Paris, Departement de Sismologie, Paris, France
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Jan 18, 2020.
+        Last updated on Jan 23, 2020.
       </span>
 
     </p>
